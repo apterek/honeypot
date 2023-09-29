@@ -1,10 +1,17 @@
+- name: Install pip
+  apt:
+    name:
+      - python3-pip
+      - python3-dev
+    state: present
+
 - name: Init directory
   file:
     path: "{{ project_directory }}"
     state: directory
     owner: root
     group: root
-    mode: 0400
+    mode: 0755
 
 - name: Install the ansible_facts module to get information about Ansible facts
   pip:
@@ -14,11 +21,16 @@
   command: pip freeze
   register: install_python_packages
 
-- name: Copy source honeypot files
-  copy:
-    src: ../../honeypot_files
-    dest: "{{ project_directory }}"
+- name: Result
+  debug:
+    var: install_python_packages
+  when: '"honeypots==0.58" in install_python_packages.stdout_lines'
 
-- name: Check the installation of the honeypots library
-  command: "python3 {{ project_directory }}/setup.py install"
-  when: "'honeypots' not in installed_packages.stdout_lines"
+#- name: Copy source honeypot files
+#  copy:
+#    src: ../honeypot_files
+#    dest: "{{ project_directory }}"
+#
+#- name: Check the installation of the honeypots library
+#  command: "python3 {{ project_directory }}/setup.py install"
+#  when: '"honeypots" not in installed_packages.stdout_lines'

@@ -7,5 +7,5 @@
       include_role:
         name: web-server
 
-    - name: Start
-      command: python3 -m honeypots  --options capture_commands
+#    - name: Start
+#      command: python3 -m honeypots  --options capture_commands
