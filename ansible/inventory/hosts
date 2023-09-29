@@ -1,0 +1,11 @@
+[windows-server]
+192.168.56.101
+
+[web-server]
+192.168.56.102
+
+[mail-server]
+192.168.56.103
+
+[ftp-server]
+192.168.56.104

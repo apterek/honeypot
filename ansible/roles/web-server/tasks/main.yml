@@ -1,0 +1,24 @@
+- name: Init directory
+  file:
+    path: "{{ project_directory }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0400
+
+- name: Install the ansible_facts module to get information about Ansible facts
+  pip:
+    name: ansible
+
+- name: Get list python packages
+  command: pip freeze
+  register: install_python_packages
+
+- name: Copy source honeypot files
+  copy:
+    src: ../../honeypot_files
+    dest: "{{ project_directory }}"
+
+- name: Check the installation of the honeypots library
+  command: "python3 {{ project_directory }}/setup.py install"
+  when: "'honeypots' not in installed_packages.stdout_lines"

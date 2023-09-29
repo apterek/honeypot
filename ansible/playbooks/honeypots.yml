@@ -1,0 +1,11 @@
+- name: Honeypot web server
+  hosts: web-server
+  become: true
+  #gather_facts: no
+  tasks:
+    - name: web-server-honeypot prepare
+      include_role:
+        name: web-server
+
+    - name: Start
+      command: python3 -m honeypots  --options capture_commands
